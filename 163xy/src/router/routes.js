@@ -5,6 +5,7 @@ import ShopCart from '../pages/ShopCart/ShopCart.vue'
 import Person from '../pages/Person/Person.vue'
 import Search from '../pages/Search/Search.vue'
 import Login from '../pages/Login/Login.vue'
+import Category from '../pages/Categores/Category'
 
 export default [
   {
@@ -33,7 +34,20 @@ export default [
     component: Categores,
     meta: {
       isShow: true
-    }
+    },
+    children: [
+      {
+        path: '/categores/category',
+        component: Category,
+        meta: {
+          isShow: true
+        }
+      },
+      {
+        path: '',
+        redirect: '/categores/category'
+      }
+    ]
   },
   {
     path: '/knowledge',

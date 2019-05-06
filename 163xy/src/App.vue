@@ -29,7 +29,7 @@ export default {
 
 <style lang='scss'>
 @import "./assets/styles/reset.scss";
-.app-container {
+#app-container {
   height: 100%;
 }
 </style>

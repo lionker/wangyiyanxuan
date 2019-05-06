@@ -1,10 +1,10 @@
 <template>
   <Header class="header-container">
     <div class="header-search-login">
-      <span class="logo"></span>
+      <a class="logo" href="/"></a>
       <div class="searchInput">
         <i class="iconfont icon-search"></i>
-        <span class="placeholder">搜索商品, 共xxxxx款好物</span>
+        <span class="placeholder" @click="$router.push('/search')">搜索商品, 共xxxxx款好物</span>
       </div>
       <button @click="$router.push('/login')">登录</button>
     </div>
