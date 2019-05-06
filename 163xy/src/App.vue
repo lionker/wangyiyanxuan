@@ -1,28 +1,35 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld/>
+  <div id="app-container">
+    <router-view/>
+    <Footer v-show="$route.meta.isShow"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import Main from './pages/Main/Main.vue'
+import Categores from './pages/Categores/Categores.vue'
+import Knowledge from './pages/Knowledge/Knowledge.vue'
+import ShopCart from './pages/ShopCart/ShopCart.vue'
+import Person from './pages/Person/Person.vue'
+import Search from './pages/Search/Search.vue'
+import Login from './pages/Login/Login.vue'
 
 export default {
-  name: 'App',
   components: {
-    HelloWorld,
-  },
+    Main,
+    Categores,
+    Knowledge,
+    ShopCart,
+    Person,
+    Search,
+    Login
+  }
 };
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang='scss'>
+@import "./assets/styles/reset.scss";
+.app-container {
+  height: 100%;
 }
 </style>
