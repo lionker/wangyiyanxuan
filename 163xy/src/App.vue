@@ -12,7 +12,6 @@ import Knowledge from './pages/Knowledge/Knowledge.vue'
 import ShopCart from './pages/ShopCart/ShopCart.vue'
 import Person from './pages/Person/Person.vue'
 import Search from './pages/Search/Search.vue'
-import Login from './pages/Login/Login.vue'
 
 export default {
   components: {
@@ -22,7 +21,6 @@ export default {
     ShopCart,
     Person,
     Search,
-    Login
   }
 };
 </script>

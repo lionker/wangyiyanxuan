@@ -4,20 +4,16 @@ import Knowledge from '../pages/Knowledge/Knowledge.vue'
 import ShopCart from '../pages/ShopCart/ShopCart.vue'
 import Person from '../pages/Person/Person.vue'
 import Search from '../pages/Search/Search.vue'
-import Login from '../pages/Login/Login.vue'
 import Category from '../pages/Categores/Category'
+import KnowFind from '../pages/Knowledge/KnowFind/KnowFind.vue'
+import KnowSelect from '../pages/Knowledge/KnowSelect/KnowSelect.vue'
+import Login from '../pages/Person/Login/Login.vue'
+import Register from '../pages/Person/Register/Register.vue'
 
 export default [
   {
     path: '/main',
     component: Main,
-    meta: {
-      isShow: true
-    }
-  },
-  {
-    path: '/person',
-    component: Person,
     meta: {
       isShow: true
     }
@@ -54,7 +50,24 @@ export default [
     component: Knowledge,
     meta: {
       isShow: true
-    }
+    },
+    children: [
+      {
+        path: '/knowledge/select',
+        component: KnowSelect
+      },
+      {
+        path: '/knowledge/find',
+        component: KnowFind,
+        meta: {
+          isShow: true
+        }
+      },
+      {
+        path: '',
+        redirect: '/knowledge/find'
+      }
+    ]
   },
   {
     path: '/search',
@@ -64,11 +77,22 @@ export default [
     }
   },
   {
-    path: '/login',
-    component: Login,
-    meta: {
-      isShow: false
-    }
+    path: '/person',
+    component: Person,
+    children: [
+      {
+        path: '/person/login',
+        component: Login
+      },
+      {
+        path: '/person/register',
+        component: Register
+      },
+      {
+        path: '',
+        redirect: '/person/login'
+      }
+    ]
   },
   {
     path: '/',

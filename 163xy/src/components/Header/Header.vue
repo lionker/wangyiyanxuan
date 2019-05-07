@@ -1,12 +1,12 @@
 <template>
-  <Header class="header-container">
+  <div class="header-container">
     <div class="header-search-login">
       <a class="logo" href="/"></a>
       <div class="searchInput">
         <i class="iconfont icon-search"></i>
         <span class="placeholder" @click="$router.push('/search')">搜索商品, 共xxxxx款好物</span>
       </div>
-      <button @click="$router.push('/login')">登录</button>
+      <button @click="$router.push('/person/login')">登录</button>
     </div>
     <div class="header-nav" v-if="isOpen">
       <ul class="header-nav-left">
@@ -72,7 +72,7 @@
         <div class="mask"></div>
       </div>
     </div>
-  </Header>
+  </div>
 </template>
 
 <script>

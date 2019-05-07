@@ -125,9 +125,11 @@ ul {
       }
     }
     &.active {
-      color: $red;
       img {
         transform: translateY(49px);
+      }
+      span {
+        color: $red;
       }
     }
     span {

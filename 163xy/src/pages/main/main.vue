@@ -44,7 +44,6 @@
 </template>
 
 <script>
-import Header from "../../components/Header/Header.vue";
 
 import Swiper from "./components/Swiper/Swiper.vue";
 import Nav from "./components/Nav/Nav.vue";
@@ -58,7 +57,6 @@ import Classify from "./components/Classify/Classify.vue";
 import FooterCopy from "./components/FooterCopy/FooterCopy.vue";
 export default {
   components: {
-    Header,
     Nav,
     Swiper,
     Gift,
