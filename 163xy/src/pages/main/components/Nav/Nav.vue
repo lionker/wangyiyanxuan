@@ -1,58 +1,28 @@
 <template>
   <section class="nav-container">
     <ul class="nav-box">
-      <li class="nav-item">
-        <img src="./images/navPng.png" alt="navlist">
-        <span>美食酒水</span>
-      </li>
-      <li class="nav-item">
-        <img src="./images/navPng.png" alt="navlist">
-        <span>美食酒水</span>
-      </li>
-      <li class="nav-item">
-        <img src="./images/navPng.png" alt="navlist">
-        <span>美食酒水</span>
-      </li>
-      <li class="nav-item">
-        <img src="./images/navPng.png" alt="navlist">
-        <span>美食酒水</span>
-      </li>
-      <li class="nav-item">
-        <img src="./images/navPng.png" alt="navlist">
-        <span>美食酒水</span>
-      </li>
-      <li class="nav-item">
-        <img src="./images/navPng.png" alt="navlist">
-        <span>美食酒水</span>
-      </li>
-      <li class="nav-item">
-        <img src="./images/navPng.png" alt="navlist">
-        <span>美食酒水</span>
-      </li>
-      <li class="nav-item">
-        <img src="./images/navPng.png" alt="navlist">
-        <span>美食酒水</span>
-      </li>
-      <li class="nav-item">
-        <img src="./images/navPng.png" alt="navlist">
-        <span>美食酒水</span>
-      </li>
-      <li class="nav-item">
-        <img src="./images/navPng.png" alt="navlist">
-        <span>美食酒水</span>
+      <li class="nav-item" v-for="(nav, index) in navList" :key="index">
+        <img :src="nav.picUrl" alt="navlist">
+        <span>{{nav.text}}</span>
       </li>
     </ul>
   </section>
 </template>
 
 <script>
-export default {};
+import { mapState} from "Vuex"
+export default {
+  computed: {
+    ...mapState({
+      navList: state => state.navList
+    })
+  }
+};
 </script>
 <style scoped lang='scss' rel='stylesheet/scss'>
 @import "../../../../assets/styles/mixin";
 .nav-container {
   padding-bottom: 30px;
-  background-color: #f4f4f4;
   .nav-box {
     @extend %clearfix;
     text-align: center;
@@ -75,5 +45,4 @@ export default {};
     }
   }
 }
-
 </style>

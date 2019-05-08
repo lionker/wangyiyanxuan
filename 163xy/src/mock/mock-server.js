@@ -1,5 +1,5 @@
 import Mock from 'mockjs'
-import mainData from './mainData.js'
+import mainData from './mainData'
 
-Mock.mock('/home', {code: 0, data: mainData})
+Mock.mock('/main', {code: 0, data: mainData})
 

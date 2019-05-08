@@ -9,56 +9,20 @@
     </div>
     <div class="reco-list">
       <div class="reco-list-top">
-        <img src="./images/goods.png" alt="好物推荐">
+        <img :src="popularItem[0].listPicUrl" alt="好物推荐">
         <div class="good-info">
           <span v-if="isShow">APP特惠</span>
-          <p class="ellipsis">21s素暖轻磨毛四件套</p>
-          <p class="ellipsis">厚实粗犷肌理感，越睡越舒适</p>
-          <p>￥399</p>
+          <p class="ellipsis">{{popularItem[0].name}}</p>
+          <p class="ellipsis">{{popularItem[0].simpleDesc}}</p>
+          <p>￥{{popularItem[0].counterPrice}}</p>
         </div>
       </div>
       <ul class="reco-list-bottom">
-        <li>
-          <img src="./images/goodGoods.png" alt="商品图">
+        <li v-for="(item, index) in getPopularItem" :key="index">
+          <img :src="item.listPicUrl" alt="商品图">
           <div class="good-name">
-            <span>30包 谷风一木软抽面巾纸囤货装</span>
-            <span class="good-price">￥399</span>
-          </div>
-          <div class="good-advantage" v-if="false">
-            <span>爆品</span>
-            <span>限时购</span>
-          </div>
-          <div class="good-full-reduction" v-if="false">
-            <div>
-              <span class="half-circle"></span>
-              <span>每满99减10券</span>
-              <span class="half-circle"></span>
-            </div>
-          </div>
-        </li>
-        <li>
-          <img src="./images/goodGoods.png" alt="商品图">
-          <div class="good-name">
-            <span>30包 谷风一木软抽面巾纸囤货装</span>
-            <span class="good-price">￥399</span>
-          </div>
-          <div class="good-advantage" v-if="false">
-            <span>爆品</span>
-            <span>限时购</span>
-          </div>
-          <div class="good-full-reduction" v-if="false">
-            <div>
-              <span class="half-circle"></span>
-              <span>每满99减10券</span>
-              <span class="half-circle"></span>
-            </div>
-          </div>
-        </li>
-        <li>
-          <img src="./images/goodGoods.png" alt="商品图">
-          <div class="good-name">
-            <span>30包 谷风一木软抽面巾纸囤货装</span>
-            <span class="good-price">￥399</span>
+            <span>{{item.name}}</span>
+            <span class="good-price">￥{{item.counterPrice}}</span>
           </div>
           <div class="good-advantage" v-if="false">
             <span>爆品</span>
@@ -78,11 +42,20 @@
 </template>
 
 <script>
+import { mapState } from "Vuex";
 export default {
   data() {
     return {
       isShow: true
     };
+  },
+  computed: {
+    ...mapState({
+      popularItem: state => state.popularItem
+    }),
+    getPopularItem() {
+      return [...this.popularItem].splice(1, 3);
+    }
   }
 };
 </script>

@@ -17,46 +17,11 @@
       </span>
     </div>
     <ul class="time-list">
-      <li >
-        <img src="./images/goods.png" alt="限时购">
+      <li v-for="(item, index) in flashSale.itemList" :key="index">
+        <img :src="item.picUrl" alt="限时购">
         <div class="good-price">
-          <span class="new-price">￥298</span>
-          <span class="old-price">￥1</span>
-        </div>
-      </li>
-      <li >
-        <img src="./images/goods.png" alt="限时购">
-        <div class="good-price">
-          <span class="new-price">￥298</span>
-          <span class="old-price">￥1</span>
-        </div>
-      </li>
-      <li >
-        <img src="./images/goods.png" alt="限时购">
-        <div class="good-price">
-          <span class="new-price">￥298</span>
-          <span class="old-price">￥1</span>
-        </div>
-      </li>
-      <li >
-        <img src="./images/goods.png" alt="限时购">
-        <div class="good-price">
-          <span class="new-price">￥298</span>
-          <span class="old-price">￥1</span>
-        </div>
-      </li>
-      <li >
-        <img src="./images/goods.png" alt="限时购">
-        <div class="good-price">
-          <span class="new-price">￥298</span>
-          <span class="old-price">￥1</span>
-        </div>
-      </li>
-      <li >
-        <img src="./images/goods.png" alt="限时购">
-        <div class="good-price">
-          <span class="new-price">￥298</span>
-          <span class="old-price">￥1</span>
+          <span class="new-price">￥{{item.activityPrice}}</span>
+          <span class="old-price">￥{{item.originPrice}}</span>
         </div>
       </li>
     </ul>
@@ -64,15 +29,64 @@
 </template>
 
 <script>
+import { mapState } from "Vuex";
 export default {
-    data () {
-      return {
-        hour: 2,
-        minute: 59,
-        second: 59
-      }
-    },
-}
+  data() {
+    return {
+      hour: 2,
+      minute: 59,
+      second: 59
+    };
+  },
+  computed: {
+    ...mapState({
+      flashSale: state => state.flashSale
+    })
+  },
+  mounted() {
+    this._timeDown();
+  },
+  methods: {
+    _timeDown() {
+      this.intervalId = setInterval(() => {
+        // 当秒数减至小于0时，重新置为59 同时分钟数减1
+        if (this.second > 0) {
+          // 秒数大于0时，秒数减1
+          this.second--;
+        } else {
+          // 秒数小于0或者等于0时
+          if (this.minute) {
+            // 如果分钟数有值，则重置秒数，同时分钟数减1
+            this.second = 59;
+            this.minute--;
+            // 如果小时数为0 则当分钟数减至0时，直接设为0
+            if (this.minute <= 0 && this.hour === 0) {
+              this.minute = 0;
+            }
+          } else if (this.hour) {
+            // 如果分钟数为0而小时数不为0  即 x:0:xx 则秒数和分钟数均置为初始值 同时小时数减1
+            this.second = 59;
+            this.minute = 59;
+            this.hour--;
+            if (this.hour <= 0) {
+              // 小时数减至0时，直接设为0
+              this.hour = 0;
+            }
+          }
+        }
+
+        if (!this.hour && !this.minute && !this.second) {
+          // 秒数/分钟数/小时数全都不大于0时，停止计时器
+          clearInterval(this.intervalId);
+        }
+        // 当分钟数减至小于0时，重置为59 同时小时数减1
+      }, 1000);
+    }
+  },
+  beforeDestroy() {
+    clearInterval(this.intervalId);
+  }
+};
 </script>
 <style scoped lang='scss' rel='stylesheet/scss'>
 @import "../../../../assets/styles/mixin";
@@ -142,5 +156,4 @@ export default {
     }
   }
 }
-
 </style>

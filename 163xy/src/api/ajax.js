@@ -7,24 +7,24 @@
  *    2.统一管理请求失败的状态
  */
 
-import axios from 'asxios'
-export default function ajax(url, data = {}, method = 'GET') {
+import axios from 'axios'
+export default function ajax (url, data = {}, method = 'GET') {
   return new Promise((resolve, reject) => {
-    let promise
-    if (methond === 'GET') {
-      promise = axios.get(url, {
+    let promise;
+    if (method === 'GET') {
+     promise = axios.get(url, {
         params: data
       })
     } else {
-      promise = axios.post(url, data)
+     promise = axios.post(url, data);
     }
     promise
-      .then( response => {
-        console.log('请求成功')
-        resolve(response.data)
+      .then(response => {
+        console.log('请求成功');
+        resolve(response.data);
       })
       .catch(error => {
-        alert('请求失败' + error.msg)
+        alert('请求失败' + error.msg);
       })
-  })
+  });
 }

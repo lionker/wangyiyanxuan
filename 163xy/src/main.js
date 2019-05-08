@@ -3,6 +3,7 @@ import 'lib-flexible/flexible';
 import App from './App';
 import router from './router';
 import store from './store';
+import './mock/mock-server';
 
 import Footer from './components/Footer/Footer.vue'
 import Split from './components/Split/Split.vue'

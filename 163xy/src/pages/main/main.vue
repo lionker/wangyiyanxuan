@@ -19,6 +19,7 @@
           </li>
         </ul>
         <Nav/>
+        <Split/>
         <!--首页主导航区-->
         <Gift/>
         <!--首页福利区-->
@@ -74,9 +75,11 @@ export default {
     this.$nextTick(() => {
       const height = document.documentElement.clientHeight;
       const recoFindMain = document.querySelector(".home-main");
-      recoFindMain.style.height = height - 290 + "px";
+      const footerHeight = document.querySelector(".m-ftWrap").clientHeight;
+      console.log(footerHeight)
+      recoFindMain.style.height = height - (footerHeight * 1.3) + "px";
       this.$refs.swiper._initSwiper();
-
+      this.$store.dispatch('getMainData'); // 初始化后请求数据
       if (!this.classScroll) {
           this.classScroll = new BScroll('.home-main', {
             click: true
