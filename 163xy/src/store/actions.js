@@ -1,5 +1,5 @@
-import { reqMainData } from '../api';
-import { reqCategoryList } from '../api';
+import { reqMainData, reqCategoryList, reqInitSearch } from '../api';
+
 
 import {
   RECEIVE_FLASHSALE,
@@ -7,7 +7,8 @@ import {
   RECEIVE_POPULARITEM,
   RECEIVE_CLASSIFYLIST,
   RECEIVE_NAVLIST,
-  RECEIVE_CATEGORIES
+  RECEIVE_CATEGORIES,
+  RECEIVE_INITSEARCH
 } from './mutation-types';
 
 export default {
@@ -31,6 +32,15 @@ export default {
       commit(RECEIVE_CATEGORIES, result.data.categoryL1List);
     } else {
       console.log('获取数据失败');
+    }
+  },
+
+  //init Search
+  async getInitSearch({ commit }) {
+    const result = await reqInitSearch();
+    if (result.code === '200') {
+      commit(RECEIVE_INITSEARCH, result.data)
+      console.log(result.data)
     }
   }
 }

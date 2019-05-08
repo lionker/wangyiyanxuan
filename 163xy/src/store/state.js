@@ -7,5 +7,7 @@ export default {
   navList: [], // 导航列表
   //categores
   categoryList: [], // 分类数据
-  currentIndex: 0 // 当前选中的下标
+  currentIndex: 0, // 当前选中的下标
+  //initSearch
+  initSearchData: {}
 }

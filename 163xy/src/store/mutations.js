@@ -4,7 +4,8 @@ import {
   RECEIVE_POPULARITEM,
   RECEIVE_CLASSIFYLIST,
   RECEIVE_NAVLIST,
-  RECEIVE_CATEGORIES
+  RECEIVE_CATEGORIES,
+  RECEIVE_INITSEARCH 
 } from './mutation-types';
 
 export default {
@@ -25,5 +26,9 @@ export default {
   },
   [RECEIVE_CATEGORIES] (state, categoryList) {
     state.categoryList = categoryList;
+  },
+  //initsearch
+  [RECEIVE_INITSEARCH] (state, initSearchData) {
+    state.initSearchData = initSearchData;
   }
 }

@@ -7,3 +7,5 @@ export const RECEIVE_NAVLIST = 'receive_navlist';
 // categores
 export const RECEIVE_CATEGORIES = 'receive_categories';
 
+// search 
+export const RECEIVE_INITSEARCH = 'receive_initsearch';

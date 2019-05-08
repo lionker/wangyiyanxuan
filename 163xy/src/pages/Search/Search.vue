@@ -3,42 +3,23 @@
     <div class="search-title">
       <div class="search-input">
         <i class="iconfont icon-search"></i>
-        <span class="placeholder">百搭直筒裤，到手仅159元</span>
+        <input
+          class="placeholder"
+          type="search"
+          :placeholder="initSearchData.defaultKeyword.keyword"
+        >
       </div>
       <button @click="$router.back()">取消</button>
     </div>
     <div class="search-list">
       <p>热门搜索</p>
       <ul>
-        <li class="highlight">
-          <a href="javascript:void(0);">内裤29</a>
-        </li>
-        <li>
-          <a href="javascript:void(0);">内裤直降29</a>
-        </li>
-        <li class="highlight">
-          <a href="javascript:void(0);">内裤直降29</a>
-        </li>
-        <li>
-          <a href="javascript:void(0);">裤直降29</a>
-        </li>
-        <li class="highlight">
-          <a href="javascript:void(0);">直降29</a>
-        </li>
-        <li class="highlight">
-          <a href="javascript:void(0);">内裤直降29</a>
-        </li>
-        <li class="highlight">
-          <a href="javascript:void(0);">内裤直降29</a>
-        </li>
-        <li>
-          <a href="javascript:void(0);">裤直降29</a>
-        </li>
-        <li class="highlight">
-          <a href="javascript:void(0);">内29</a>
-        </li>
-        <li class="highlight">
-          <a href="javascript:void(0);">内裤直降29</a>
+        <li
+          :class="{highlight: keywords.highlight === 1}"
+          v-for="(keywords, index) in initSearchData.hotKeywordVOList"
+          :key="index"
+        >
+          <a href="javascript:void(0);">{{keywords.keyword}}</a>
         </li>
       </ul>
     </div>
@@ -46,7 +27,17 @@
 </template>
 
 <script>
-export default {};
+import { mapState } from "Vuex";
+export default {
+  mounted() {
+    this.$store.dispatch("getInitSearch");
+  },
+  computed: {
+    ...mapState({
+      initSearchData: state => state.initSearchData
+    })
+  }
+};
 </script>
 <style scoped lang='scss' rel='stylesheet/scss'>
 @import "../../assets/styles/mixin";
@@ -66,11 +57,17 @@ export default {};
       height: 56px;
       border-radius: 10px;
       border: none;
-      background-color: rgba(0, 0, 0, 0.1);
+      background-color: #f4f4f4;
       text-align: center;
       line-height: 56px;
       i {
         font-size: 30px;
+      }
+      input {
+        width: 90%;
+        height: 100%;
+        border: 0;
+        background-color: #f4f4f4;
       }
       .placeholder {
         font-size: 30px;
