@@ -38,10 +38,9 @@
     </div>
   </div>
 </template>
-
 <script>
+import "swiper/dist/css/swiper.min.css";
 import Swiper from "swiper";
-import 'swiper/dist/css/swiper.min.css'
 export default {
   methods: {
     _initSwiper() {
@@ -49,8 +48,8 @@ export default {
       new Swiper(".swiper-container", {
         direction: "horizontal",
         loop: true,
-        autoplay: true, // 自动轮播
-        speed: 1000,
+        autoplay: true,
+        speed: 1000/60,
         pagination: {
           el: ".swiper-pagination",
           type: "custom",
@@ -73,9 +72,9 @@ export default {
       });
     }
   }
-}
+};
 </script>
-<style scoped lang='scss' rel='stylesheet/scss'>
+<style lang="scss" rel="stylesheet/scss">
 @import "../../../../assets/styles/mixin";
 .page {
   .swiper-container {
@@ -84,6 +83,27 @@ export default {
     img {
       width: 100%;
       height: 100%;
+    }
+    .swiper-pagination-fraction,
+    .swiper-pagination-custom,
+    .swiper-pagination-bullets {
+      width: 100%;
+      height: 4px;
+      bottom: 50px;
+      .swiper-pagination-customs {
+        width: 40px;
+        height: 4px;
+        display: inline-block;
+        margin-right: 10px;
+        background-color: rgba(255, 255, 255, 0.5);
+      }
+      .swiper-pagination-customs-active {
+        width: 40px;
+        height: 4px;
+        display: inline-block;
+        border-radius: 2px;
+        background-color: $red;
+      }
     }
   }
 }

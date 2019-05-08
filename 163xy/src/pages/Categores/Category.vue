@@ -41,9 +41,14 @@
 </template>
 
 <script>
+import BScroll from "better-scroll";
 export default {
-
-}
+  mounted() {
+    new BScroll(".category-container", {
+      click: true
+    });
+  }
+};
 </script>
 <style scoped lang='scss' rel='stylesheet/scss'>
 .category-container {
@@ -74,5 +79,4 @@ export default {
     }
   }
 }
-
 </style>

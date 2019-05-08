@@ -65,6 +65,7 @@ export default {
     setIsShow() {
       this.isActive = true;
       this.isShow = true;
+      this.$router.replace('/person/login');
     },
     gotoRegis(path, isPhoneRegis) {
       this.isShow = false;

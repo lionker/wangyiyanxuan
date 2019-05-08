@@ -19,18 +19,71 @@
         <li>
           <router-link :to="{path: '/knowledge/find', query: {tabIndex: 3}}">养猪网</router-link>
         </li>
+        <li>
+          <router-link :to="{path: '/knowledge/find', query: {tabIndex: 3}}">养猪网</router-link>
+        </li>
+        <li>
+          <router-link :to="{path: '/knowledge/find', query: {tabIndex: 3}}">养猪网</router-link>
+        </li>
+        <li>
+          <router-link :to="{path: '/knowledge/find', query: {tabIndex: 3}}">养猪网</router-link>
+        </li>
+        <li>
+          <router-link :to="{path: '/knowledge/find', query: {tabIndex: 3}}">养猪网</router-link>
+        </li>
+        <li>
+          <router-link :to="{path: '/knowledge/find', query: {tabIndex: 3}}">养猪网</router-link>
+        </li>
+        <li>
+          <router-link :to="{path: '/knowledge/find', query: {tabIndex: 3}}">养猪网</router-link>
+        </li>
+        <li>
+          <router-link :to="{path: '/knowledge/find', query: {tabIndex: 3}}">养猪网</router-link>
+        </li>
+        <li>
+          <router-link :to="{path: '/knowledge/find', query: {tabIndex: 3}}">养猪网</router-link>
+        </li>
+        <li>
+          <router-link :to="{path: '/knowledge/find', query: {tabIndex: 3}}">养猪网</router-link>
+        </li>
       </ul>
     </div>
   </div>
 </template>
 
 <script>
+import BScroll from "better-scroll";
 export default {
-
-}
+  mounted() {
+    if (this.$route.path.indexOf("knowledge") !== -1) {
+      this._setUlWidth();
+      this._initScroll();
+    }
+  },
+  methods: {
+    // 实现导航区域的水平滑动
+    _setUlWidth() {
+      const ul = document.querySelector(".ul-node");
+      let ulWidth;
+      const lis = ul.querySelectorAll("li");
+      Array.from(lis).forEach(li => {
+        const width = li.clientWidth * lis.length + 50 * (lis.length - 1);
+        ulWidth = width;
+      });
+      ul.style.width = ulWidth + "px";
+    },
+    _initScroll() {
+      /* eslint-disable no-new */
+      new BScroll(".reco-nav", {
+        click: true,
+        scrollX: true
+      });
+    }
+  }
+};
 </script>
 <style scoped lang='scss' rel='stylesheet/scss'>
-@import '../../assets/styles/mixin';
+@import "../../assets/styles/mixin";
 .slot-container {
   position: relative;
   z-index: 100;
@@ -89,10 +142,10 @@ export default {
   .reco-nav {
     width: 100%;
     overflow: hidden;
+    background-color: #fafafa;
+    border-bottom: 1px solid #999;
     ul {
       height: 70px;
-      background-color: #fafafa;
-      border-bottom: 1px solid #999;
       li {
         float: left;
         font-size: 28px;
@@ -108,5 +161,4 @@ export default {
     }
   }
 }
-
 </style>

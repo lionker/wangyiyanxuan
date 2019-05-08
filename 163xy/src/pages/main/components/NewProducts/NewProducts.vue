@@ -91,7 +91,7 @@ export default {
       width: 216px;
       height: 285px;
       margin-right: 20px;
-      padding-bottom: 330px;
+      padding-bottom: 0.397655rem;
       img {
         width: 216px;
         height: 216px;

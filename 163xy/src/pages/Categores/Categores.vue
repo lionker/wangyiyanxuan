@@ -50,20 +50,52 @@
           <li>
             <router-link :to="{path: 'category'}">鞋专区</router-link>
           </li>
+          <li>
+            <router-link :to="{path: 'category'}">鞋专区</router-link>
+          </li>
+          <li>
+            <router-link :to="{path: 'category'}">鞋专区</router-link>
+          </li>
+          <li>
+            <router-link :to="{path: 'category'}">鞋专区</router-link>
+          </li>
+          <li>
+            <router-link :to="{path: 'category'}">鞋专区</router-link>
+          </li>
+          <li>
+            <router-link :to="{path: 'category'}">鞋专区</router-link>
+          </li>
+          <li>
+            <router-link :to="{path: 'category'}">鞋专区</router-link>
+          </li>
         </ul>
       </div>
-      <router-view/>
+      <router-view/> 
     </section>
+
   </div>
 </template>
 
 <script>
+import BScroll from "better-scroll";
+
 export default {
   data() {
     return {
       categories: [],
       categoryId: ""
     };
+  },
+  mounted() {
+    this.$nextTick(() => {
+      /* eslint-disable no-new */
+      const height = document.documentElement.clientHeight;
+      const recoFindMain = document.querySelector(".categoryList-left");
+      recoFindMain.style.height = height - 280 + "px";
+      new BScroll(".categoryList-left", {
+        click: true
+      });
+    });
   }
 };
 </script>
@@ -71,6 +103,7 @@ export default {
 <style lang="scss" rel="stylesheet/scss" scoped>
 @import "../../assets/styles/mixin";
 .categoryList-container {
+  position: relative;
   height: 100%;
   padding: 20px 0 100px;
   .searchInput {
@@ -98,6 +131,7 @@ export default {
   .categoryList-main {
     height: 100%;
     position: relative;
+    overflow-y: hidden;
   }
   .categoryList-left {
     position: absolute;

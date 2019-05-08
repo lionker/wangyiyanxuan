@@ -1,5 +1,5 @@
 <template>
-  <section class="login-container">
+  <section class="login-container" >
     <div class="main-logo">
       <img src="http://yanxuan.nosdn.127.net/bd139d2c42205f749cd4ab78fa3d6c60.png" alt="logo">
     </div>
@@ -71,6 +71,9 @@ export default {
     toggleLoginMethod() {
       this.setIsShow();
     }
+  },
+  mounted() {
+    console.log(this.$route.query.isPhoneLogin !== undefined)
   }
 };
 </script>

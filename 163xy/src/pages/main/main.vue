@@ -3,7 +3,7 @@
     <Header/>
     <div class="home-main">
       <div class="scroll">
-        <Swiper/>
+        <Swiper ref="swiper"/>
         <ul class="wangyi-grow">
           <li>
             <i class="grow-icon"></i>
@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import BScroll from "better-scroll";
 
 import Swiper from "./components/Swiper/Swiper.vue";
 import Nav from "./components/Nav/Nav.vue";
@@ -67,6 +68,21 @@ export default {
     NewProducts,
     Classify,
     FooterCopy
+  },
+
+  mounted() {
+    this.$nextTick(() => {
+      const height = document.documentElement.clientHeight;
+      const recoFindMain = document.querySelector(".home-main");
+      recoFindMain.style.height = height - 290 + "px";
+      this.$refs.swiper._initSwiper();
+
+      if (!this.classScroll) {
+          this.classScroll = new BScroll('.home-main', {
+            click: true
+          })
+        }
+    });
   }
 };
 </script>
@@ -76,6 +92,7 @@ export default {
   padding-bottom: 100px;
   background-color: #fff;
   .home-main {
+    padding-top: 83px;
     .scroll {
       .wangyi-grow {
         display: flex;
