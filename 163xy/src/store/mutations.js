@@ -3,7 +3,8 @@ import {
   RECEIVE_NEWITEM,
   RECEIVE_POPULARITEM,
   RECEIVE_CLASSIFYLIST,
-  RECEIVE_NAVLIST
+  RECEIVE_NAVLIST,
+  RECEIVE_CATEGORIES
 } from './mutation-types';
 
 export default {
@@ -21,5 +22,8 @@ export default {
   },
   [RECEIVE_NAVLIST] (state, navList) {
     state.navList = navList;
+  },
+  [RECEIVE_CATEGORIES] (state, categoryList) {
+    state.categoryList = categoryList;
   }
 }

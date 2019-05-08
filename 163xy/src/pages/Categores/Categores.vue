@@ -8,85 +8,39 @@
       <div class="line"></div>
       <div class="categoryList-left">
         <ul>
-          <li class="active">
-            <router-link :to="{path: 'category'}">推荐专区</router-link>
-          </li>
-          <li>
-            <router-link :to="{path: 'category'}">鞋专区</router-link>
-          </li>
-          <li>
-            <router-link :to="{path: 'category'}">鞋专区</router-link>
-          </li>
-          <li>
-            <router-link :to="{path: 'category'}">鞋专区</router-link>
-          </li>
-          <li>
-            <router-link :to="{path: 'category'}">鞋专区</router-link>
-          </li>
-          <li>
-            <router-link :to="{path: 'category'}">鞋专区</router-link>
-          </li>
-          <li>
-            <router-link :to="{path: 'category'}">鞋专区</router-link>
-          </li>
-          <li>
-            <router-link :to="{path: 'category'}">鞋专区</router-link>
-          </li>
-          <li>
-            <router-link :to="{path: 'category'}">鞋专区</router-link>
-          </li>
-          <li>
-            <router-link :to="{path: 'category'}">鞋专区</router-link>
-          </li>
-          <li>
-            <router-link :to="{path: 'category'}">鞋专区</router-link>
-          </li>
-          <li>
-            <router-link :to="{path: 'category'}">鞋专区</router-link>
-          </li>
-          <li>
-            <router-link :to="{path: 'category'}">鞋专区</router-link>
-          </li>
-          <li>
-            <router-link :to="{path: 'category'}">鞋专区</router-link>
-          </li>
-          <li>
-            <router-link :to="{path: 'category'}">鞋专区</router-link>
-          </li>
-          <li>
-            <router-link :to="{path: 'category'}">鞋专区</router-link>
-          </li>
-          <li>
-            <router-link :to="{path: 'category'}">鞋专区</router-link>
-          </li>
-          <li>
-            <router-link :to="{path: 'category'}">鞋专区</router-link>
-          </li>
-          <li>
-            <router-link :to="{path: 'category'}">鞋专区</router-link>
-          </li>
-          <li>
-            <router-link :to="{path: 'category'}">鞋专区</router-link>
+          <li
+            :class="{active: currentId * 1 === category.id}"
+            v-for="(category, index) in categoryList"
+            :key="index"
+          >
+            <router-link :to="{path: 'category', query: {id: category.id}}">{{category.name}}</router-link>
           </li>
         </ul>
       </div>
-      <router-view/> 
+      <router-view/>
     </section>
-
   </div>
 </template>
 
 <script>
 import BScroll from "better-scroll";
+import { mapState } from "Vuex";
 
 export default {
   data() {
     return {
-      categories: [],
-      categoryId: ""
+      isActive: true,
+      currentId: ""
     };
   },
+  computed: {
+    ...mapState({
+      categoryList: state => state.categoryList
+    })
+  },
   mounted() {
+    this.$store.dispatch("getCategoryList"); // 分发给anctions
+    this.currentId = this.$route.query.id ? this.$route.query.id : "1022001";
     this.$nextTick(() => {
       /* eslint-disable no-new */
       const height = document.documentElement.clientHeight;
@@ -96,6 +50,11 @@ export default {
         click: true
       });
     });
+  },
+  watch: {
+    $route() {
+      this.currentId = this.$route.query.id;
+    }
   }
 };
 </script>
