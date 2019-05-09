@@ -17,7 +17,11 @@ export default {
       isOn: true
     };
   },
-  
+  mounted() {
+    // 识物页面初始显示时即请求数据,为路由组件使用数据做准备
+    this.$store.dispatch("getRecommendTabs");
+    this.$store.dispatch("getRecommends");
+  },
   methods: {
     gotoFindOrSelect(isGoToFind) {
       this.isOn = !this.isOn;

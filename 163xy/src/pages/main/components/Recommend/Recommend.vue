@@ -7,11 +7,11 @@
         <i class="iconfont icon-52"></i>
       </span>
     </div>
-    <div class="reco-list">
+    <div class="reco-list" v-if="isShow">
       <div class="reco-list-top">
         <img :src="popularItem[0].listPicUrl" alt="好物推荐">
         <div class="good-info">
-          <span v-if="isShow">APP特惠</span>
+          <span >APP特惠</span>
           <p class="ellipsis">{{popularItem[0].name}}</p>
           <p class="ellipsis">{{popularItem[0].simpleDesc}}</p>
           <p>￥{{popularItem[0].counterPrice}}</p>
@@ -40,24 +40,31 @@
     </div>
   </section>
 </template>
-
 <script>
-import { mapState } from "Vuex";
-export default {
-  data() {
-    return {
-      isShow: true
-    };
-  },
-  computed: {
-    ...mapState({
-      popularItem: state => state.popularItem
-    }),
-    getPopularItem() {
-      return [...this.popularItem].splice(1, 3);
+  import {mapState} from 'Vuex';
+  export default {
+    data () {
+      return {
+        isShow: false
+      }
+    },
+    computed: {
+      ...mapState({
+        popularItem: state => state.popularItem
+
+      }),
+      getPopularItem () {
+        console.log('getPopularItem' + this.popularItem )
+        return [...this.popularItem].splice(1, 4);
+      },
+    },
+    watch: {
+      popularItem(popularItem){
+        console.log('watch+popularItem')
+        this.isShow = true
+      }
     }
   }
-};
 </script>
 <style scoped lang='scss' rel='stylesheet/scss'>
 @import "../../../../assets/styles/mixin";

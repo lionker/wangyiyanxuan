@@ -10,41 +10,12 @@
     </header>
     <div class="reco-nav" v-if="$route.path.indexOf('knowledge/find') !== -1">
       <ul class="ul-node">
-        <li>
-          <router-link :to="{path: '/knowledge/find', query: {tabIndex: 1}}">推荐:</router-link>
-        </li>
-        <li class="active">
-          <router-link :to="{path: '/knowledge/find', query: {tabIndex: 2}}">回购单:</router-link>
-        </li>
-        <li>
-          <router-link :to="{path: '/knowledge/find', query: {tabIndex: 3}}">养猪网</router-link>
-        </li>
-        <li>
-          <router-link :to="{path: '/knowledge/find', query: {tabIndex: 3}}">养猪网</router-link>
-        </li>
-        <li>
-          <router-link :to="{path: '/knowledge/find', query: {tabIndex: 3}}">养猪网</router-link>
-        </li>
-        <li>
-          <router-link :to="{path: '/knowledge/find', query: {tabIndex: 3}}">养猪网</router-link>
-        </li>
-        <li>
-          <router-link :to="{path: '/knowledge/find', query: {tabIndex: 3}}">养猪网</router-link>
-        </li>
-        <li>
-          <router-link :to="{path: '/knowledge/find', query: {tabIndex: 3}}">养猪网</router-link>
-        </li>
-        <li>
-          <router-link :to="{path: '/knowledge/find', query: {tabIndex: 3}}">养猪网</router-link>
-        </li>
-        <li>
-          <router-link :to="{path: '/knowledge/find', query: {tabIndex: 3}}">养猪网</router-link>
-        </li>
-        <li>
-          <router-link :to="{path: '/knowledge/find', query: {tabIndex: 3}}">养猪网</router-link>
-        </li>
-        <li>
-          <router-link :to="{path: '/knowledge/find', query: {tabIndex: 3}}">养猪网</router-link>
+        <li
+          :class="{active: tabIndex * 1 === index}"
+          v-for="(tab, index) in recommendTabs"
+          :key="tab.tabId"
+        >
+          <router-link :to="{path: '/knowledge/find', query: {tabIndex: index}}">{{tab.tabName}}</router-link>
         </li>
       </ul>
     </div>
@@ -52,13 +23,24 @@
 </template>
 
 <script>
+import { mapState } from "Vuex";
 import BScroll from "better-scroll";
 export default {
   mounted() {
     if (this.$route.path.indexOf("knowledge") !== -1) {
-      this._setUlWidth();
-      this._initScroll();
+      this.$store.dispatch("getRecommendTabs");
+      // 实现从其他组件切换时初始显示为推荐页的功能
+      console.log("tabIndex" + this.$route.query.tabIndex);
+      if (!this.$route.query.tabIndex) {
+        this.$store.dispatch("updateTabIndex", 0);
+      }
     }
+  },
+  computed: {
+    ...mapState({
+      recommendTabs: state => state.recommendTabs,
+      tabIndex: state => state.tabIndex
+    })
   },
   methods: {
     // 实现导航区域的水平滑动
@@ -66,11 +48,14 @@ export default {
       const ul = document.querySelector(".ul-node");
       let ulWidth;
       const lis = ul.querySelectorAll("li");
-      Array.from(lis).forEach(li => {
-        const width = li.clientWidth * lis.length + 50 * (lis.length - 1);
-        ulWidth = width;
-      });
-      ul.style.width = ulWidth + "px";
+      const total = Array.from(lis).reduce((prev, curr) => {
+        console.log("curr"+curr.clientWidth)
+        return prev + curr.clientWidth + 40
+      }, 0);
+      console.log('total------'+ total)
+      if(total){
+        ul.style.width = total + "px";
+      }
     },
     _initScroll() {
       /* eslint-disable no-new */
@@ -78,6 +63,17 @@ export default {
         click: true,
         scrollX: true
       });
+    }
+  },
+  // 监视$route.query.tabIndex的变化，更新state中的tabIndex
+  watch: {
+    $route(tabIndex) {
+      this.$store.dispatch("updateTabIndex", this.$route.query.tabIndex);
+    },
+    recommendTabs(recommendTabs) {
+      console.log("watch+recommendTabs");
+      this._setUlWidth();
+      this._initScroll();
     }
   }
 };
@@ -146,16 +142,17 @@ export default {
     border-bottom: 1px solid #999;
     ul {
       height: 70px;
+      width: 5000px;
       li {
         float: left;
         font-size: 28px;
-        height: 70px;
-        line-height: 70px;
+        height: 67px;
+        line-height: 67px;
         margin: 0 20px;
         padding: 0 4px;
         &.active {
           color: $red;
-          border-bottom: 3px solid $red;
+          border-bottom: 2px solid $red;
         }
       }
     }

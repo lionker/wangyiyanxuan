@@ -6,13 +6,14 @@
 </template>
 
 <script>
-import KnowList from '../components/KnowList.vue'
-import OrderList from '../components/OrderList.vue'
+  import {mapState} from 'Vuex';
+import KnowList from "../components/KnowList.vue";
+import OrderList from "../components/OrderList.vue";
 export default {
-  data(){
-    return {
-      tabIndex: 2
-    }
+  computed: {
+    ...mapState({
+      tabIndex: state => state.tabIndex
+    })
   },
   components: {
     KnowList,

@@ -9,3 +9,11 @@ export const RECEIVE_CATEGORIES = 'receive_categories';
 
 // search 
 export const RECEIVE_INITSEARCH = 'receive_initsearch';
+
+//knowLedge
+export const UPDATE_INDEX = 'update_index';
+export const RECEIVE_RECOMMENDTABS = 'receive_recommendtabs';
+export const RECEIVE_RECOMMENDS = 'receive_recommends';
+export const RECEIVE_AUTORECOMMENDS = 'receive_autorecommends';
+export const RECEIVE_ORDERSHOWTOP = 'receive_ordershowtop';
+export const RECEIVE_ORDERSHOWRATINGS = 'receive_ordershowratings';
