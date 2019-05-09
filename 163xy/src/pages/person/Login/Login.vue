@@ -1,9 +1,25 @@
 <template>
-  <section class="login-container" >
+  <section class="login-container">
     <div class="main-logo">
       <img src="http://yanxuan.nosdn.127.net/bd139d2c42205f749cd4ab78fa3d6c60.png" alt="logo">
     </div>
-    <div class="phone-login" v-show="$route.query.isPhoneLogin">
+    <div class="phone-login" v-show="isShow === 'mm'">
+      <div class="phone">
+        <input type="text" maxlength="11" placeholder="手机号/用户名/邮箱" v-model="phone">
+      </div>
+      <div class="pwd">
+        <input class="msg-code" type="password" placeholder="密码" v-model="code">
+      </div>
+      <div class="error-message">
+        <span>{{errorMsg}}</span>
+      </div>
+      <div class="get-help">
+        <span>遇到问题？</span>
+        <span @click="isShow='dx'">使用短信验证登录</span>
+      </div>
+      <button class="login" @click="login">登录</button>
+    </div>
+    <div class="phone-login" v-show="$route.query.isPhoneLogin && isShow === 'dx'">
       <div class="phone">
         <input type="text" maxlength="11" placeholder="请输入手机号" v-model="phone">
       </div>
@@ -16,9 +32,9 @@
       </div>
       <div class="get-help">
         <span>遇到问题？</span>
-        <span>使用密码验证登录</span>
+        <span @click="isShow = 'mm'">使用密码验证登录</span>
       </div>
-      <button class="login">登录</button>
+      <button class="login" @click="login">登录</button>
     </div>
     <div class="email-login" v-show="!$route.query.isPhoneLogin">
       <div class="email">
@@ -36,7 +52,7 @@
         >注册账号</span>
         <span>忘记密码</span>
       </div>
-      <button class="login">登录</button>
+      <button class="login" @click="login">登录</button>
     </div>
     <div class="other-login" @click="toggleLoginMethod()">
       <span>其他登录方式</span>
@@ -61,7 +77,8 @@ export default {
       phone: "", // 用户输入手机号
       code: "", // 用户输入验证码
       email: "", // 用户输入邮箱
-      pwd: "" // 用户输入密码
+      pwd: "", // 用户输入密码
+      isShow: "dx"
     };
   },
   props: {
@@ -70,10 +87,49 @@ export default {
   methods: {
     toggleLoginMethod() {
       this.setIsShow();
+    },
+    login() {
+      // 进行前端表单验证
+      const { phone, code, email, pwd } = this;
+      if (this.$route.query.isPhoneLogin) {
+        // 手机登录
+        if (phone.trim() === "") {
+          this.errorMsg = "手机号不能为空";
+        } else if (!/^1[3456789]\d{9}$/.test(phone)) {
+          this.errorMsg = "手机号格式不正确";
+        } else if (code.trim() === "") {
+          this.errorMsg = "验证码不能为空";
+        } else if (!/^\d{6}$/.test(code)) {
+          this.errorMsg = "请输入正确的6位数字验证码";
+        } else {
+          this.errorMsg = "";
+          console.log("登录成功");
+        }
+      } else {
+        // 邮箱登陆
+        if (email.trim() === "") {
+          this.errorMsg = "邮箱不能为空";
+        } else if (
+          !/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/.test(
+            email
+          )
+        ) {
+          this.errorMsg = "邮箱格式不正确";
+        } else if (pwd.trim() === "") {
+          this.errorMsg = "密码不能为空";
+        } else if (pwd.length < 6) {
+          this.errorMsg = "密码应不小于6位";
+        } else if (!/^(?![0-9]+$)(?![a-zA-Z]+$)[a-zA-Z0-9]{6,20}/.test(pwd)) {
+          this.errorMsg = "密码必须由数字和字母组成";
+        } else {
+          this.errorMsg = "";
+          console.log("登录成功");
+        }
+      }
     }
   },
   mounted() {
-    console.log(this.$route.query.isPhoneLogin !== undefined)
+    console.log(this.$route.query.isPhoneLogin !== undefined);
   }
 };
 </script>
