@@ -34,6 +34,39 @@
           </div>
         </li>
       </ul>
+      <ul v-for="(newReco, index) in getRecoData" :key="index">
+        <li v-for="(item, index) in newReco.topics" :key="index">
+          <div class="style-LR" v-if="item.style === 2">
+            <div class="style-left">
+              <span class="user-info">
+                <img :src="item.avatar" alt="avatar">
+                <span>{{item.nickname}}</span>
+              </span>
+              <p class="title">{{item.title}}</p>
+              <p class="desc">{{item.subTitle}}</p>
+              <span class="view-count">
+                <i class="iconfont icon-view"></i>
+                <span>{{(item.readCount/1000).toFixed(1)}}k人看过</span>
+              </span>
+            </div>
+            <div class="style-right">
+              <img :src="item.picUrl" alt="mainImg">
+            </div>
+          </div>
+          <div class="style-TB" v-if="item.style === 1">
+            <div class="user-info">
+              <img :src="item.avatar" alt="avatar">
+              <span>{{item.nickname}}</span>
+            </div>
+            <p class="title">{{item.title}}</p>
+            <img class="main-img" :src="item.picUrl" alt="mainImg">
+            <span class="view-count">
+              <i class="iconfont icon-view"></i>
+              <span>{{(item.readCount/1000).toFixed(1)}}k人看过</span>
+            </span>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -42,6 +75,12 @@
 import { mapState } from "Vuex";
 import BScroll from "better-scroll";
 export default {
+  data() {
+    return {
+      moreDataPage: 1,
+      autoRecoData: []
+    };
+  },
   mounted() {
     this.$nextTick(() => {
       // 页面显示完成后设置将要实现scroll滚动效果的元素的父元素的高度，使子元素高度超出父元素才能实现滚动
@@ -56,7 +95,13 @@ export default {
     ...mapState({
       recommends: state => state.recommends,
       autoRecommends: state => state.autoRecommends
-    })
+    }),
+    getRecoData() {
+      if (this.autoRecommends.hasMore) {
+        this.autoRecoData.push(...this.autoRecommends.result);
+        return this.autoRecoData;
+      }
+    }
   },
   methods: {
     // 可以上拉刷新的初始化scroll方法

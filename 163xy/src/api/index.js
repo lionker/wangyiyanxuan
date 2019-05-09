@@ -14,7 +14,7 @@ export const reqCategoryList = () => ajax('/categorylist');
 export const reqInitSearch = () => ajax(`${prefix}/xhr/search/init.json`, 'POST');
 
 
-// 识物-Tab 懒数据 ---- http://m.you.163.com/topic/v1/find/getTabs.json
+// 识物-Tab nav懒数据 ---- http://m.you.163.com/topic/v1/find/getTabs.json
 export const reqRecommendTabs = () => ajax(`${prefix}/topic/v1/find/getTabs.json`);
 
 // 识物-推荐 数据 ----
