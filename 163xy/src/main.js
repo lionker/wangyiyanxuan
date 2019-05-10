@@ -7,6 +7,7 @@ import router from './router';
 import store from './store';
 import './mock/mock-server';
 import loading from './assets/images/loading.gif'
+import './validate'
 
 import Footer from './components/Footer/Footer.vue'
 import Split from './components/Split/Split.vue'

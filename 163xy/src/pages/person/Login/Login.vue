@@ -5,10 +5,26 @@
     </div>
     <div class="phone-login" v-show="isShow === 'mm'">
       <div class="phone">
-        <input type="text" maxlength="11" placeholder="手机号/用户名/邮箱" v-model="phone">
+        <input
+          type="text"
+          maxlength="11"
+          placeholder="手机号/用户名/邮箱"
+          v-model="name"
+          name="name"
+          v-validate="'required'"
+        >
+        <span style="color: red">{{errors.first('phone')}}</span>
       </div>
       <div class="pwd">
-        <input class="msg-code" type="password" placeholder="密码" v-model="code">
+        <input
+          class="msg-code"
+          type="password"
+          placeholder="密码"
+          name="code"
+          maxlength="6"
+          v-model="code"
+          v-validate="{required: true}"
+        >
       </div>
       <div class="error-message">
         <span>{{errorMsg}}</span>
@@ -21,11 +37,28 @@
     </div>
     <div class="phone-login" v-show="$route.query.isPhoneLogin && isShow === 'dx'">
       <div class="phone">
-        <input type="text" maxlength="11" placeholder="请输入手机号" v-model="phone">
+        <input
+          type="text"
+          maxlength="11"
+          placeholder="请输入手机号"
+          v-model="phone"
+          v-validate="'required|mobile'"
+          name="phone"
+        >
+        <span style="color: red">{{errors.first('phone')}}</span>
       </div>
       <div class="code">
-        <input class="msg-code" type="text" placeholder="请输入短信验证码" v-model="code">
+        <input
+          class="msg-code"
+          type="text"
+          placeholder="请输入短信验证码"
+          name="code"
+          v-model="code"
+          maxlength="6"
+          v-validate="{required: true, regex: /^\d{6}$/}"
+        >
         <button class="get-code">获取验证码</button>
+        <span style="color: red">{{errors.first('code')}}</span>
       </div>
       <div class="error-message">
         <span>{{errorMsg}}</span>
@@ -38,10 +71,22 @@
     </div>
     <div class="email-login" v-show="!$route.query.isPhoneLogin">
       <div class="email">
-        <input type="text" placeholder="邮箱账号" v-model="email">
+        <input
+          type="text"
+          placeholder="邮箱账号"
+          v-model="email"
+          name="email"
+          v-validate="{required: true}"
+        >
       </div>
       <div class="pwd">
-        <input type="password" placeholder="密码" v-model="pwd">
+        <input
+          type="password"
+          placeholder="密码"
+          v-model="pwd"
+          name="pwd"
+          v-validate="{required: true}"
+        >
       </div>
       <div class="error-message">
         <span>{{errorMsg}}</span>
@@ -78,7 +123,8 @@ export default {
       code: "", // 用户输入验证码
       email: "", // 用户输入邮箱
       pwd: "", // 用户输入密码
-      isShow: "dx"
+      isShow: "dx",
+      name: ""
     };
   },
   props: {
@@ -88,9 +134,29 @@ export default {
     toggleLoginMethod() {
       this.setIsShow();
     },
-    login() {
+    async login() {
+      console.log('login')
+      const {
+        isShow,
+        isRightPhone,
+        phone,
+        code,
+        name,
+        pwd,
+        captcha,
+        email
+      } = this;
+      console.log(this)
+      let result;
+      const validateNames =
+        (isShow == "dx") ? ["phone", "code"] : ["name", "pwd", "email"];
+      // 进行整体表单验证
+      const success = await this.$validator.validateAll(validateNames);
+      if (success) {
+        console.log("登录成功");
+      }
       // 进行前端表单验证
-      const { phone, code, email, pwd } = this;
+      /* const { phone, code, email, pwd } = this;
       if (this.$route.query.isPhoneLogin) {
         // 手机登录
         if (phone.trim() === "") {
@@ -125,7 +191,7 @@ export default {
           this.errorMsg = "";
           console.log("登录成功");
         }
-      }
+      } */
     }
   },
   mounted() {
