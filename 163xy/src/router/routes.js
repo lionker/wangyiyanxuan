@@ -1,14 +1,21 @@
-import Main from '../pages/Main/Main.vue'
-import Categores from '../pages/Categores/Categores.vue'
-import Knowledge from '../pages/Knowledge/Knowledge.vue'
-import ShopCart from '../pages/ShopCart/ShopCart.vue'
-import Person from '../pages/Person/Person.vue'
-import Search from '../pages/Search/Search.vue'
+// import Main from '../pages/Main/Main.vue'
+// import Categores from '../pages/Categores/Categores.vue'
+// import Knowledge from '../pages/Knowledge/Knowledge.vue'
+// import ShopCart from '../pages/ShopCart/ShopCart.vue'
+// import Person from '../pages/Person/Person.vue'
+// import Search from '../pages/Search/Search.vue'
 import Category from '../pages/Categores/Category'
 import KnowFind from '../pages/Knowledge/KnowFind/KnowFind.vue'
 import KnowSelect from '../pages/Knowledge/KnowSelect/KnowSelect.vue'
 import Login from '../pages/Person/Login/Login.vue'
 import Register from '../pages/Person/Register/Register.vue'
+
+const Main = () => import('../pages/Main/Main.vue')
+const Search = () => import('../pages/Search/Search.vue');
+const Categores = () => import('../pages/Categores/Categores.vue');
+const Knowledge = () => import('../pages/Knowledge/Knowledge.vue');
+const ShopCart = () => import('../pages/ShopCart/ShopCart.vue');
+const Person = () => import('../pages/Person/Person.vue');
 
 export default [
   {

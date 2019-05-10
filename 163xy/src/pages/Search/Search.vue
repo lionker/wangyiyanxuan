@@ -3,11 +3,7 @@
     <div class="search-title">
       <div class="search-input">
         <i class="iconfont icon-search"></i>
-        <input
-          class="placeholder"
-          type="search"
-          :placeholder="initSearchData.defaultKeyword.keyword"
-        >
+        <input class="placeholder" type="search" :placeholder="hotKey">
       </div>
       <button @click="$router.back()">取消</button>
     </div>
@@ -29,13 +25,23 @@
 <script>
 import { mapState } from "Vuex";
 export default {
+  data() {
+    return {
+      hotKey: ""
+    };
+  },
   mounted() {
     this.$store.dispatch("getInitSearch");
   },
   computed: {
     ...mapState({
       initSearchData: state => state.initSearchData
-    })
+    }),
+  },
+  watch: {
+    initSearchData(initSearchData){
+      this.hotKey = initSearchData.defaultKeyword.keyword
+    }
   }
 };
 </script>
