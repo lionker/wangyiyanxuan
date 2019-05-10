@@ -14,6 +14,7 @@
           :class="{active: tabIndex * 1 === index}"
           v-for="(tab, index) in recommendTabs"
           :key="tab.tabId"
+          :ref="index"
         >
           <router-link :to="{path: '/knowledge/find', query: {tabIndex: index}}">{{tab.tabName}}</router-link>
         </li>
@@ -49,17 +50,17 @@ export default {
       let ulWidth;
       const lis = ul.querySelectorAll("li");
       const total = Array.from(lis).reduce((prev, curr) => {
-        console.log("curr"+curr.clientWidth)
-        return prev + curr.clientWidth + 40
+        // console.log("curr" + curr.clientWidth);
+        return prev + curr.clientWidth + 40;
       }, 0);
-      console.log('total------'+ total)
-      if(total){
+      // console.log("total------" + total);
+      if (total) {
         ul.style.width = total + "px";
       }
     },
     _initScroll() {
       /* eslint-disable no-new */
-      new BScroll(".reco-nav", {
+      this.knowScroll = new BScroll(".reco-nav", {
         click: true,
         scrollX: true
       });
@@ -68,7 +69,17 @@ export default {
   // 监视$route.query.tabIndex的变化，更新state中的tabIndex
   watch: {
     $route(tabIndex) {
-      this.$store.dispatch("updateTabIndex", this.$route.query.tabIndex);
+      if (!this.$route.query.tabIndex) {
+        this.$store.dispatch("updateTabIndex", 0);
+      } else {
+        this.$store.dispatch("updateTabIndex", this.$route.query.tabIndex);
+      }
+      this.$nextTick(() => {
+        if (document.querySelector(".ul-node")) {
+          this._setUlWidth();
+          this._initScroll();
+        }
+      });
     },
     recommendTabs(recommendTabs) {
       console.log("watch+recommendTabs");
