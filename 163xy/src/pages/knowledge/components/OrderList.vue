@@ -159,8 +159,8 @@
     },
     computed: {
       ...mapState({
-        orderShowTop: state => state.orderShowTop,
-        orderShowRatings: state => state.orderShowRatings
+        orderShowTop: state => state.knowLedge.orderShowTop,
+        orderShowRatings: state => state.knowLedge.orderShowRatings
       }),
       // 计算得到下标为奇数的评论数据
       getOddRatings () {

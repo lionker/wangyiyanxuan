@@ -26,7 +26,7 @@ import { mapState } from "Vuex";
 export default {
   computed: {
     ...mapState({
-      newItem: state => state.newItem
+      newItem: state => state.main.newItem
     }),
     // 定义方法, 用于指定数量数据量显示
     getNewItem () {

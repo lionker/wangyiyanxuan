@@ -14,7 +14,7 @@ import { mapState} from "Vuex"
 export default {
   computed: {
     ...mapState({
-      navList: state => state.navList
+      navList: state => state.main.navList
     })
   }
 };

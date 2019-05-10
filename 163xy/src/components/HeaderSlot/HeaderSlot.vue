@@ -39,8 +39,8 @@ export default {
   },
   computed: {
     ...mapState({
-      recommendTabs: state => state.recommendTabs,
-      tabIndex: state => state.tabIndex
+      recommendTabs: state => state.knowLedge.recommendTabs,
+      tabIndex: state => state.knowLedge.tabIndex
     })
   },
   methods: {

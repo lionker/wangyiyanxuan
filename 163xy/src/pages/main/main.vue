@@ -76,7 +76,6 @@ export default {
       const height = document.documentElement.clientHeight;
       const recoFindMain = document.querySelector(".home-main");
       const footerHeight = document.querySelector(".m-ftWrap").clientHeight;
-      console.log(footerHeight)
       recoFindMain.style.height = height - (footerHeight * 1.3) + "px";
       this.$refs.swiper._initSwiper();
       this.$store.dispatch('getMainData'); // 初始化后请求数据

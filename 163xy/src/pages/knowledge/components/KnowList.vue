@@ -93,8 +93,8 @@ export default {
   },
   computed: {
     ...mapState({
-      recommends: state => state.recommends,
-      autoRecommends: state => state.autoRecommends
+      recommends: state => state.knowLedge.recommends,
+      autoRecommends: state => state.knowLedge.autoRecommends
     }),
     getRecoData() {
       if (this.autoRecommends.hasMore) {

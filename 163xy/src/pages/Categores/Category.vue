@@ -30,7 +30,7 @@ export default {
   },
   computed: {
     ...mapState({
-      categoryList: state => state.categoryList
+      categoryList: state => state.categores.categoryList
     })
   },
   watch: {

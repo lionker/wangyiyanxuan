@@ -40,7 +40,7 @@ export default {
   },
   computed: {
     ...mapState({
-      flashSale: state => state.flashSale
+      flashSale: state => state.main.flashSale
     })
   },
   mounted() {

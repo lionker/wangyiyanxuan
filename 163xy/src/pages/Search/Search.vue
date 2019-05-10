@@ -35,7 +35,7 @@ export default {
   },
   computed: {
     ...mapState({
-      initSearchData: state => state.initSearchData
+      initSearchData: state => state.search.initSearchData
     }),
   },
   watch: {

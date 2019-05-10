@@ -12,7 +12,7 @@ import OrderList from "../components/OrderList.vue";
 export default {
   computed: {
     ...mapState({
-      tabIndex: state => state.tabIndex
+      tabIndex: state => state.knowLedge.tabIndex
     })
   },
   components: {

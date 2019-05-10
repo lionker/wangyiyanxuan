@@ -75,7 +75,7 @@ export default {
   },
   computed: {
     ...mapState({
-      navList: state => state.navList
+      navList: state => state.main.navList
     })
     // filterNavList: {
     // get: function() {
@@ -106,7 +106,6 @@ export default {
           click: true,
           scrollX: true
         });
-        console.log('_initScroll')
     }
   },
   mounted() {
