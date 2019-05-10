@@ -47,16 +47,16 @@
               <img
                 v-if="item.bannerInfo.height >= 1000 && item.bannerInfo.width !== item.bannerInfo.height"
                 class="big-size"
-                :src="item.bannerInfo.picUrl"
+                v-lazy="item.bannerInfo.picUrl"
                 alt="userImg"
               >
               <img
                 v-else-if="item.bannerInfo.width === item.bannerInfo.height"
                 class="middle-size"
-                :src="item.bannerInfo.picUrl"
+                v-lazy="item.bannerInfo.picUrl"
                 alt="userImg"
               >
-              <img v-else class="small-size" :src="item.bannerInfo.picUrl" alt="userImg">
+              <img v-else class="small-size" v-lazy="item.bannerInfo.picUrl" alt="userImg">
               <!--带有用户信息的样式-->
               <div v-if="!item.collection">
                 <p class="ellipsis rate-content">{{item.content}}</p>
@@ -88,22 +88,22 @@
               <img
                 v-if="item.bannerInfo.height >= 1000 && item.bannerInfo.width !== item.bannerInfo.height"
                 class="big-size"
-                :src="item.bannerInfo.picUrl"
+                v-lazy="item.bannerInfo.picUrl"
                 alt="userImg"
               >
               <img
                 v-else-if="item.bannerInfo.width === item.bannerInfo.height"
                 class="middle-size"
-                :src="item.bannerInfo.picUrl"
+                v-lazy="item.bannerInfo.picUrl"
                 alt="userImg"
               >
-              <img v-else class="small-size" :src="item.bannerInfo.picUrl" alt="userImg">
+              <img v-else class="small-size" v-lazy="item.bannerInfo.picUrl" alt="userImg">
               <!--带有用户信息的样式-->
               <div v-if="!item.collection">
                 <p class="ellipsis rate-content">{{item.content}}</p>
                 <div class="user-info">
                   <div class="avatar-name">
-                    <img class="user-avatar" :src="item.avatar" alt="userAvatar">
+                    <img class="user-avatar" v-lazy="item.avatar" alt="userAvatar">
                     <span class="username">{{item.nickName}}</span>
                   </div>
                   <span class="like-count">

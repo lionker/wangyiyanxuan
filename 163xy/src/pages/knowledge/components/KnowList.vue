@@ -50,7 +50,7 @@
               </span>
             </div>
             <div class="style-right">
-              <img :src="item.picUrl" alt="mainImg">
+              <img v-lazy="item.picUrl" alt="mainImg">
             </div>
           </div>
           <div class="style-TB" v-if="item.style === 1">
@@ -59,7 +59,7 @@
               <span>{{item.nickname}}</span>
             </div>
             <p class="title">{{item.title}}</p>
-            <img class="main-img" :src="item.picUrl" alt="mainImg">
+            <img class="main-img" v-lazy="item.picUrl" alt="mainImg">
             <span class="view-count">
               <i class="iconfont icon-view"></i>
               <span>{{(item.readCount/1000).toFixed(1)}}k人看过</span>

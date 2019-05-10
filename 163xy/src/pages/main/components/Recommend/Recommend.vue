@@ -50,7 +50,7 @@
     },
     computed: {
       ...mapState({
-        popularItem: state => state.popularItem
+        popularItem: state => state.main.popularItem
 
       }),
       getPopularItem () {

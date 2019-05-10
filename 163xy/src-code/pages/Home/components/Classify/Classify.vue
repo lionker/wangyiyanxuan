@@ -5,7 +5,7 @@
       <div class="classify-list">
         <ul class="ul-node">
           <li v-for="(item ,index) in classify.itemList" :key="index">
-            <img :src="item.listPicUrl" alt="商品图片">
+            <img v-lazy="item.listPicUrl" alt="商品图片">
             <div class="good-info">
               <span class="good-name">100%山羊绒纯色围巾</span>
               <span class="good-price">￥289</span>

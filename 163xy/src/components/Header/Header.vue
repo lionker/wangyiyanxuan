@@ -149,7 +149,6 @@ export default {
           this.recoIndex = this.$refs.recoLi.getAttribute("data-index");
           this.activeIndex = this.tabIndex;
         }
-
         this.$nextTick(()=>{
           this._initScroll();
         })

@@ -1,11 +1,11 @@
 <template>
   <section>
     <div class="classify-container" v-for="(classify, index) in classifyList" :key="index">
-      <img :src="classify.titlePicUrl" alt="标题图片">
+      <img v-lazy="classify.titlePicUrl" alt="标题图片">
       <div class="classify-list">
         <ul class="ul-node">
           <li v-for="(item ,index) in classify.itemList" :key="index">
-            <img :src="item.listPicUrl" alt="商品图片">
+            <img v-lazy="item.listPicUrl" alt="商品图片">
             <div class="good-info">
               <span class="good-name">{{item.name}}</span>
               <span class="good-price">￥{{item.retailPrice}}</span>
@@ -25,11 +25,12 @@ export default {
     this.$nextTick(() => {
       this._setUlWidth();
       this._initScroll();
+      console.log('Classfy')
     });
   },
   computed: {
     ...mapState({
-      classifyList: state => state.classifyList
+      classifyList: state => state.main.classifyList
     })
   },
   methods: {
