@@ -1,14 +1,14 @@
 /**
  * 用于管理首页状态数据的模块
  */
-import { reqMainData } from '../../api';
+import {reqHomeData} from '../../api';
 import {
-  UPDATE_INDEX,
   RECEIVE_FLASHSALE,
   RECEIVE_NEWITEM,
   RECEIVE_POPULARITEM,
   RECEIVE_CLASSIFYLIST,
-  RECEIVE_NAVLIST
+  RECEIVE_NAVLIST,
+  UPDATE_INDEX
 } from '../mutation-types';
 const state = {
   tabIndex: 0, // 当前被选中的分类下标
@@ -22,30 +22,25 @@ const mutations = {
   [UPDATE_INDEX] (state, tabIndex) {
     state.tabIndex = tabIndex;
   },
-  [RECEIVE_FLASHSALE](state, flashSale) {
+  [RECEIVE_FLASHSALE] (state, flashSale) {
     state.flashSale = flashSale;
   },
-  [RECEIVE_NEWITEM](state, newItem) {
+  [RECEIVE_NEWITEM] (state, newItem) {
     state.newItem = newItem;
   },
-  [RECEIVE_POPULARITEM](state, popularItem) {
+  [RECEIVE_POPULARITEM] (state, popularItem) {
     state.popularItem = popularItem;
   },
-  [RECEIVE_CLASSIFYLIST](state, classifyList) {
+  [RECEIVE_CLASSIFYLIST] (state, classifyList) {
     state.classifyList = classifyList;
   },
-  [RECEIVE_NAVLIST](state, navList) {
+  [RECEIVE_NAVLIST] (state, navList) {
     state.navList = navList;
   }
 };
 const actions = {
-  // 更新当前下标的同步action
-  updateMainIndex({ commit }, tabIndex) {
-    console.log(tabIndex + 'actions')
-    commit(UPDATE_INDEX, tabIndex)
-  },
-  async getMainData({ commit }) {
-    const result = await reqMainData();
+  async getHomeData ({commit}) {
+    const result = await reqHomeData();
     if (result.code === 0) {
       commit(RECEIVE_FLASHSALE, result.data.flashSaleModule);
       commit(RECEIVE_NEWITEM, result.data.newItemList);

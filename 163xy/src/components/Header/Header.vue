@@ -16,7 +16,7 @@
           ref="recoLi"
           @click="toggleActive()"
         >
-          <a href="javascript:void(0);">推荐</a>
+          <router-link to="/main">推荐</router-link>
         </li>
         <li
           :class="{active: activeIndex === index}"
@@ -24,7 +24,7 @@
           :key="index"
           @click="toggleActive(index)"
         >
-          <a href="javascript:void(0);">{{nav.text}}</a>
+          <router-link :to="{path: '/main', query: {tabIndex: index}}">{{nav.text}}</router-link>
         </li>
       </ul>
       <span class="iconfont icon-54 header-nav-arrow" @click="toggleShow"></span>
@@ -43,7 +43,7 @@
             ref="recoLi"
             @click="toggleActive()"
           >
-            <a href="javascript:void(0);">推荐</a>
+            <router-link to="/main">推荐</router-link>
           </li>
           <li
             :class="{on: activeIndex === index}"
@@ -51,7 +51,7 @@
             :key="index"
             @click="toggleActive(index)"
           >
-            <a href="javascript:void(0);">{{nav.text}}</a>
+            <router-link :to="{path: '/main', query: {tabIndex: index}}">{{nav.text}}</router-link>
           </li>
         </ul>
         <div class="mask"></div>
@@ -67,7 +67,7 @@ export default {
   data() {
     return {
       isOpen: true,
-      activeIndex: 10, // 当前选中的下标
+      activeIndex: 0, // 当前选中的下标
       recoIndex: 0, // 选项'推荐'的下标 跟随请求回的导航列表长度改变
       lefts: [], // 导航列表中每一项的left值
       scrollX: 0 // 列表水平滑动的距离
@@ -75,7 +75,8 @@ export default {
   },
   computed: {
     ...mapState({
-      navList: state => state.main.navList
+      navList: state => state.main.navList,
+      tabIndex: state => state.main.tabIndex
     })
     // filterNavList: {
     // get: function() {
@@ -101,11 +102,19 @@ export default {
         this.activeIndex = this.recoIndex;
       }
     },
-    _initScroll () {
+    _initScroll() {
+      const ul = document.querySelector(".header-nav-left");
+      const lis = ul.querySelectorAll("li");
+      const total = Array.from(lis).reduce((prev, curr) => {
+        return prev + curr.clientWidth + 51;
+      }, 0); 
+      if (total) {
+        ul.style.width = total + "px";
+      }
       this.mainScroll = new BScroll(".header-nav", {
-          click: true,
-          scrollX: true
-        });
+        click: true,
+        scrollX: true
+      });
     }
   },
   mounted() {
@@ -126,22 +135,37 @@ export default {
     navList(navList) {
       this.$nextTick(() => {
         /* eslint-disable no-new */
-        this._initScroll()
-        // console.log("recoIndex"+ this.recoIndex)
-        console.log(
-          this.$refs.recoLi.getAttribute("data-index") + "data-index"
-        );
-        this.recoIndex = this.$refs.recoLi.getAttribute("data-index") * 1;
-        console.log(this.recoIndex + "nextTick");
-        // this._getLefts();
+        
+
+        if (this.tabIndex != 0 && !this.tabIndex) {
+          console.log("!this.tabIndex" + this.tabIndex);
+          let newArr = this.navList.filter(
+            (nav, index) => (index + 1) / 5 !== 0
+          );
+          this.activeIndex = newArr.length;
+          this.recoIndex = this.$refs.recoLi.getAttribute("data-index") * 1;
+        } else {
+          console.log(this.tabIndex + "tabIndex");
+          this.recoIndex = this.$refs.recoLi.getAttribute("data-index");
+          this.activeIndex = this.tabIndex;
+        }
+
+        this.$nextTick(()=>{
+          this._initScroll();
+        })
       });
     },
     isOpen(isOpen) {
-      if (!document.querySelector('.header-nav')) {
-        this.$nextTick(()=>{
-            this._initScroll()
-        })
+      if (!document.querySelector(".header-nav")) {
+        this.$nextTick(() => {
+          console.log(this.recoIndex + 'nextTick')
+          this._initScroll();
+        });
       }
+    },
+    $route(tabIndex) {
+      console.log(" $route");
+      this.$store.dispatch("updateMainIndex", this.$route.query.tabIndex);
     }
   }
 };
