@@ -9,18 +9,22 @@
       <button @click="$router.push('/person/login')">登录</button>
     </div>
     <div class="header-nav" v-if="isOpen">
-      <ul class="header-nav-left">
-        <li :class="{active: true}">
+      <ul class="header-nav-left" v-show="recoIndex">
+        <li
+          :class="{active: activeIndex === recoIndex}"
+          :data-index="navList.length"
+          ref="recoLi"
+          @click="toggleActive()"
+        >
           <a href="javascript:void(0);">推荐</a>
         </li>
-        <li>
-          <a href="javascript:void(0);">居家生活</a>
-        </li>
-        <li>
-          <a href="javascript:void(0);">服饰鞋包</a>
-        </li>
-        <li>
-          <a href="javascript:void(0);">美食酒水</a>
+        <li
+          :class="{active: activeIndex === index}"
+          v-for="(nav, index) in navList"
+          :key="index"
+          @click="toggleActive(index)"
+        >
+          <a href="javascript:void(0);">{{nav.text}}</a>
         </li>
       </ul>
       <span class="iconfont icon-54 header-nav-arrow" @click="toggleShow"></span>
@@ -31,42 +35,23 @@
           <span>全部频道</span>
           <i class="iconfont icon-53" @click="toggleShow"></i>
         </div>
-        <ul class="ulNode">
-          <li>
+        <!-- <div v-if="recoIndex"></div> -->
+        <ul class="ulNode" v-show="recoIndex">
+          <li
+            :class="{on: activeIndex === recoIndex}"
+            :data-index="navList.length"
+            ref="recoLi"
+            @click="toggleActive()"
+          >
             <a href="javascript:void(0);">推荐</a>
           </li>
-          <li>
-            <a href="javascript:void(0);">居家生活</a>
-          </li>
-          <li>
-            <a href="javascript:void(0);">服饰鞋包</a>
-          </li>
-          <li>
-            <a href="javascript:void(0);">美食酒水</a>
-          </li>
-          <li>
-            <a href="javascript:void(0);">推荐</a>
-          </li>
-          <li>
-            <a href="javascript:void(0);">居家生活</a>
-          </li>
-          <li>
-            <a href="javascript:void(0);">服饰鞋包</a>
-          </li>
-          <li>
-            <a href="javascript:void(0);">美食酒水</a>
-          </li>
-          <li>
-            <a href="javascript:void(0);">推荐</a>
-          </li>
-          <li>
-            <a href="javascript:void(0);">居家生活</a>
-          </li>
-          <li>
-            <a href="javascript:void(0);">服饰鞋包</a>
-          </li>
-          <li>
-            <a href="javascript:void(0);">美食酒水</a>
+          <li
+            :class="{on: activeIndex === index}"
+            v-for="(nav, index) in navList"
+            :key="index"
+            @click="toggleActive(index)"
+          >
+            <a href="javascript:void(0);">{{nav.text}}</a>
           </li>
         </ul>
         <div class="mask"></div>
@@ -76,15 +61,88 @@
 </template>
 
 <script>
+import { mapState } from "Vuex";
+import BScroll from "better-scroll";
 export default {
   data() {
     return {
-      isOpen: true
+      isOpen: true,
+      activeIndex: 10, // 当前选中的下标
+      recoIndex: 0, // 选项'推荐'的下标 跟随请求回的导航列表长度改变
+      lefts: [], // 导航列表中每一项的left值
+      scrollX: 0 // 列表水平滑动的距离
     };
+  },
+  computed: {
+    ...mapState({
+      navList: state => state.navList
+    })
+    // filterNavList: {
+    // get: function() {
+    //   console.log(this.activeIndex + "get");
+    //   return this.navList;
+    // },
+    // set: function() {
+    //   let newArr = this.navList.filter((nav, index) => (index + 1) % 5 !== 0);
+    //   this.activeIndex = newArr.length;
+    //   console.log(this.activeIndex + "set");
+    //   return newArr;
+    // }
+    // }
   },
   methods: {
     toggleShow() {
       this.isOpen = !this.isOpen;
+    },
+    toggleActive(index) {
+      if (index + 1 && index + 1 <= this.recoIndex) {
+        this.activeIndex = index;
+      } else {
+        this.activeIndex = this.recoIndex;
+      }
+    },
+    _initScroll () {
+      this.mainScroll = new BScroll(".header-nav", {
+          click: true,
+          scrollX: true
+        });
+        console.log('_initScroll')
+    }
+  },
+  mounted() {
+    // this.$nextTick(() => {
+    //   /* eslint-disable no-new */
+    //   new BScroll(".header-nav", {
+    //     click: true,
+    //     scrollX: true
+    //   });
+    //   // console.log("recoIndex"+ this.recoIndex)
+    //   console.log(this.$refs.recoLi.getAttribute("data-index") + "data-index");
+    //   this.recoIndex = this.$refs.recoLi.getAttribute("data-index") * 1;
+    //   console.log(this.recoIndex + "nextTick");
+    //   // this._getLefts();
+    // });
+  },
+  watch: {
+    navList(navList) {
+      this.$nextTick(() => {
+        /* eslint-disable no-new */
+        this._initScroll()
+        // console.log("recoIndex"+ this.recoIndex)
+        console.log(
+          this.$refs.recoLi.getAttribute("data-index") + "data-index"
+        );
+        this.recoIndex = this.$refs.recoLi.getAttribute("data-index") * 1;
+        console.log(this.recoIndex + "nextTick");
+        // this._getLefts();
+      });
+    },
+    isOpen(isOpen) {
+      if (!document.querySelector('.header-nav')) {
+        this.$nextTick(()=>{
+            this._initScroll()
+        })
+      }
     }
   }
 };
