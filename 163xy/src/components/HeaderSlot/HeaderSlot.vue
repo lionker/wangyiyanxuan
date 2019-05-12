@@ -31,7 +31,6 @@ export default {
     if (this.$route.path.indexOf("knowledge") !== -1) {
       this.$store.dispatch("getRecommendTabs");
       // 实现从其他组件切换时初始显示为推荐页的功能
-      console.log("tabIndex" + this.$route.query.tabIndex);
       if (!this.$route.query.tabIndex) {
         this.$store.dispatch("updateTabIndex", 0);
       }

@@ -20,7 +20,7 @@ export default function ajax (url, data = {}, method = 'GET') {
     }
     promise
       .then(response => {
-        console.log('请求成功');
+        alert.log('请求成功');
         resolve(response.data);
       })
       .catch(error => {

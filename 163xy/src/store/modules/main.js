@@ -8,8 +8,9 @@ import {
   RECEIVE_NEWITEM,
   RECEIVE_POPULARITEM,
   RECEIVE_CLASSIFYLIST,
-  RECEIVE_NAVLIST
+  RECEIVE_NAVLIST,
 } from '../mutation-types';
+
 const state = {
   tabIndex: 0, // 当前被选中的分类下标
   flashSale: [], // 限时购
@@ -19,7 +20,7 @@ const state = {
   navList: [] // 导航列表
 };
 const mutations = {
-  [UPDATE_INDEX] (state, tabIndex) {
+  [UPDATE_INDEX](state, tabIndex) {
     state.tabIndex = tabIndex;
   },
   [RECEIVE_FLASHSALE](state, flashSale) {
@@ -41,7 +42,6 @@ const mutations = {
 const actions = {
   // 更新当前下标的同步action
   updateMainIndex({ commit }, tabIndex) {
-    console.log(tabIndex + 'actions')
     commit(UPDATE_INDEX, tabIndex)
   },
   async getMainData({ commit }) {

@@ -135,7 +135,6 @@ export default {
       this.setIsShow();
     },
     async login() {
-      console.log('login')
       const {
         isShow,
         isRightPhone,
@@ -146,14 +145,13 @@ export default {
         captcha,
         email
       } = this;
-      console.log(this)
       let result;
       const validateNames =
         (isShow == "dx") ? ["phone", "code"] : ["name", "pwd", "email"];
       // 进行整体表单验证
       const success = await this.$validator.validateAll(validateNames);
       if (success) {
-        console.log("登录成功");
+        alert("登录成功");
       }
       // 进行前端表单验证
       /* const { phone, code, email, pwd } = this;
@@ -169,7 +167,7 @@ export default {
           this.errorMsg = "请输入正确的6位数字验证码";
         } else {
           this.errorMsg = "";
-          console.log("登录成功");
+          alert("登录成功");
         }
       } else {
         // 邮箱登陆
@@ -189,14 +187,11 @@ export default {
           this.errorMsg = "密码必须由数字和字母组成";
         } else {
           this.errorMsg = "";
-          console.log("登录成功");
+          alert("登录成功");
         }
       } */
     }
   },
-  mounted() {
-    console.log(this.$route.query.isPhoneLogin !== undefined);
-  }
 };
 </script>
 <style scoped lang='scss' rel='stylesheet/scss'>

@@ -68,7 +68,6 @@ const actions = {
   },
   // 识物--推荐--上拉自动获取推荐商品数据的异步action
   async getAutoRecommends({ commit }, page, size) {
-    console.log(page, size)
     const result = await reqAutoRecommendData(page, size);
     if (result.code === '200') {
       commit(RECEIVE_AUTORECOMMENDS, result.data);

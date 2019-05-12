@@ -130,98 +130,111 @@
 </template>
 
 <script>
-  import {mapState} from 'Vuex';
-  import BScroll from 'better-scroll';
-  export default {
-    data () {
-      return {
-        morePage: 1, // 请求评论的页码数
-        type: 1, // 请求评论的类型
-        oddRatingsData: [], // 下标为奇数的评论数据
-        evenRatingsData: [] // 下标为偶数的评论数据
+import { mapState } from "Vuex";
+import BScroll from "better-scroll";
+
+export default {
+  data() {
+    return {
+      morePage: 1, // 请求评论的页码数
+      type: 1, // 请求评论的类型
+      oddRatingsData: [], // 下标为奇数的评论数据
+      evenRatingsData: [] // 下标为偶数的评论数据
+    };
+  },
+  mounted() {
+    this.$store.dispatch("getOrderShowTop", 6);
+    this.$store.dispatch("getOrderShowRatings", {
+      page: this.morePage,
+      size: 10,
+      type: this.type
+    });
+    this.$nextTick(() => {
+      const height = document.documentElement.clientHeight;
+      const orderPage = document.querySelector(".order-page");
+      orderPage.style.height = height + "px";
+      this._initScroll();
+      this._setUlWidth();
+      /* eslint-disable no-new */
+      new BScroll(".order-goods", {
+        click: true,
+        scrollX: true
+      });
+    });
+  },
+  computed: {
+    ...mapState({
+      orderShowTop: state => state.knowLedge.orderShowTop,
+      orderShowRatings: state => state.knowLedge.orderShowRatings
+    }),
+    // 计算得到下标为奇数的评论数据
+    getOddRatings() {
+      if (this.orderShowRatings.topicList) {
+        const filterOddData = this.orderShowRatings.topicList.filter(
+          (item, index) => index % 2 === 1
+        );
+        this.oddRatingsData.push(...filterOddData);
+        return this.oddRatingsData;
       }
     },
-    mounted () {
-      this.$store.dispatch('getOrderShowTop', 6);
-      this.$store.dispatch('getOrderShowRatings', {page: this.morePage, size: 10, type: this.type});
-      this.$nextTick(() => {
-        const height = document.documentElement.clientHeight;
-        const orderPage = document.querySelector('.order-page');
-        orderPage.style.height = height + 'px';
-        this._initScroll();
-        this._setUlWidth();
-        /* eslint-disable no-new */
-        new BScroll('.order-goods', {
-          click: true,
-          scrollX: true
-        })
-      })
-    },
-    computed: {
-      ...mapState({
-        orderShowTop: state => state.knowLedge.orderShowTop,
-        orderShowRatings: state => state.knowLedge.orderShowRatings
-      }),
-      // 计算得到下标为奇数的评论数据
-      getOddRatings () {
-        if (this.orderShowRatings.topicList) {
-          const filterOddData = this.orderShowRatings.topicList.filter((item, index) => index % 2 === 1);
-          this.oddRatingsData.push(...filterOddData);
-          return this.oddRatingsData;
-        }
-      },
-      // 计算得到下标为偶数的评论数据
-      getEvenRatings () {
-        if (this.orderShowRatings.topicList) {
-          const filterEvenData = this.orderShowRatings.topicList.filter((item, index) => index % 2 === 0);
-          this.evenRatingsData.push(...filterEvenData);
-          return this.evenRatingsData;
-        }
+    // 计算得到下标为偶数的评论数据
+    getEvenRatings() {
+      if (this.orderShowRatings.topicList) {
+        const filterEvenData = this.orderShowRatings.topicList.filter(
+          (item, index) => index % 2 === 0
+        );
+        this.evenRatingsData.push(...filterEvenData);
+        return this.evenRatingsData;
       }
-    },
-    methods: {
-      // 初始化评论区域的scroll对象，并且配置上拉加载更多。。。
-      _initScroll () {
-        if (this.orderScroll) {
-          this.orderScroll.refresh();
-        } else {
-          this.orderScroll = new BScroll('.order-page', {
-            probeType: 2,
-            // 下拉刷新：可以配置顶部下拉的距离（threshold） 来决定刷新时机以及回弹停留的距离（stop）
-            // 这个配置用于做上拉加载功能，默认为 false。当设置为 true 或者是一个 Object 的时候，可以开启上拉加载
-            pullUpLoad: {
-              threshold: 50
-            },
-            /* mouseWheel: { // pc端同样能滑动
+    }
+  },
+  methods: {
+    // 初始化评论区域的scroll对象，并且配置上拉加载更多。。。
+    _initScroll() {
+      if (this.orderScroll) {
+        this.orderScroll.refresh();
+      } else {
+        this.orderScroll = new BScroll(".order-page", {
+          probeType: 2,
+          // 下拉刷新：可以配置顶部下拉的距离（threshold） 来决定刷新时机以及回弹停留的距离（stop）
+          // 这个配置用于做上拉加载功能，默认为 false。当设置为 true 或者是一个 Object 的时候，可以开启上拉加载
+          pullUpLoad: {
+            threshold: 50
+          },
+          /* mouseWheel: { // pc端同样能滑动
              speed: 20,
              invert: false
              }, */
-            useTransition: false // 防止iphone微信滑动卡顿
-          });
-          this.orderScroll.on('pullingUp', async () => {
-            this.morePage++;
-            // alert('已到最底部');
-            console.log('加载ajax数据');
-            await this.$store.dispatch('getOrderShowRatings', {page: this.morePage, size: 10, type: this.type});
-            this.orderScroll.finishPullUp(); // 可以多次执行上拉刷新
-          });
-        }
-      },
-      // 设置种草好物的ul宽度
-      _setUlWidth () {
-        let width;
-        const ulNode = this.$refs.topUlNode;
-        const lis = ulNode.querySelectorAll('li');
-        Array.from(lis).forEach((li) => {
-          width = li.clientWidth * lis.length + 20 * (lis.length - 1);
+          useTransition: false // 防止iphone微信滑动卡顿
         });
-        ulNode.style.width = width + 'px';
+        this.orderScroll.on("pullingUp", async () => {
+          this.morePage++;
+          // alert('已到最底部');
+          console.log("加载ajax数据");
+          await this.$store.dispatch("getOrderShowRatings", {
+            page: this.morePage,
+            size: 10,
+            type: this.type
+          });
+          this.orderScroll.finishPullUp(); // 可以多次执行上拉刷新
+        });
       }
+    },
+    // 设置种草好物的ul宽度
+    _setUlWidth() {
+      let width;
+      const ulNode = this.$refs.topUlNode;
+      const lis = ulNode.querySelectorAll("li");
+      Array.from(lis).forEach(li => {
+        width = li.clientWidth * lis.length + 20 * (lis.length - 1);
+      });
+      ulNode.style.width = width + "px";
     }
   }
+};
 </script>
 <style scoped lang='scss' rel='stylesheet/scss'>
-@import '../../../assets/styles/mixin';
+@import "../../../assets/styles/mixin";
 .order-page {
   .show-orders {
     .main-img {
@@ -313,7 +326,7 @@
         box-sizing: border-box;
         display: flex;
         justify-content: space-around;
-        .content-left, 
+        .content-left,
         .content-right {
           width: 45%;
           li {
@@ -391,5 +404,4 @@
     }
   }
 }
-
 </style>

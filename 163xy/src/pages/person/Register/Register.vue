@@ -99,16 +99,14 @@ export default {
           this.errorMsg = "两次输入的密码不一致";
         } else {
           this.errorMsg = "";
-          console.log("注册成功");
+          alert("注册成功");
         }
       } else {
         // 邮箱注册
         if (email.trim() === "") {
           this.errorMsg = "邮箱不能为空";
         } else if (
-          !/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/.test(
-            email
-          )
+          !/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/.test(email)
         ) {
           this.errorMsg = "邮箱格式不正确";
         } else if (pwd.trim() === "") {
@@ -121,7 +119,7 @@ export default {
           this.errorMsg = "两次输入的密码不一致";
         } else {
           this.errorMsg = "";
-          console.log("注册成功");
+          alert("注册成功");
         }
       }
     }
